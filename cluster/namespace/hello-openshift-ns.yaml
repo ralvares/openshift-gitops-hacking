@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hello-openshift
+  labels:
+    kubernetes.io/metadata.name: hello-openshift
+    openshift.io/run-level: '0'
+    name: hello-openshift
+    project: hello-openshift
+    maintainer: "lovelydeveloper@trusted.com"
+spec:
+  finalizers:
+  - kubernetes
