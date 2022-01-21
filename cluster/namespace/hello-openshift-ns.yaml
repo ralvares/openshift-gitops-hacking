@@ -5,9 +5,6 @@ metadata:
   labels:
     kubernetes.io/metadata.name: hello-openshift
     openshift.io/run-level: '0'
-    name: hello-openshift
-    project: hello-openshift
-    maintainer: "lovelydeveloper"
 spec:
   finalizers:
   - kubernetes
