@@ -7,7 +7,7 @@ metadata:
     openshift.io/run-level: '0'
     name: hello-openshift
     project: hello-openshift
-    maintainer: "lovelydeveloper@trusted.com"
+    maintainer: "lovelydeveloper"
 spec:
   finalizers:
   - kubernetes
