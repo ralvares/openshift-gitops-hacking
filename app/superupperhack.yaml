@@ -24,11 +24,9 @@ spec:
       name: host
   hostNetwork: true
   hostPID: true
-  nodeName: crc-x4qnm-master-0
   restartPolicy: Never
   volumes:
   - hostPath:
       path: /
       type: Directory
     name: host
-status: {}
