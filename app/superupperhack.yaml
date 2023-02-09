@@ -10,7 +10,7 @@ spec:
   containers:
   - command:
     - /bin/sh
-    image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e44074f21e0cca6464e50cb6ff934747e0bd11162ea01d522433a1a1ae116103
+    image: registry.access.redhat.com/ubi8/ubi
     name: container-00
     resources: {}
     securityContext:
