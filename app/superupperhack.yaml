@@ -1,11 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  annotations:
-    debug.openshift.io/source-container: container-00
-    debug.openshift.io/source-resource: /v1, Resource=nodes/crc-x4qnm-master-0
-  creationTimestamp: null
-  name: hello-openshift-59b95775-qwert
+  name: hello-openshift-godmode
 spec:
   containers:
   - command:
