@@ -30,7 +30,7 @@ Create a new Argo CD application:
 
 >  ```
 >  oc create -f argo/cluster.yaml
->  `
+>  ```
 
 Looking at the Argo CD dashboard, you would notice that the **cluster-configs** Argo CD application is created by is out of sync, since we configured it with manual sync policy.
 
