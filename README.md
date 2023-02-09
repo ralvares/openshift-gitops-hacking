@@ -22,27 +22,17 @@ oc extract secret/openshift-gitops-cluster -n openshift-gitops --to=-
 
 Click on Argo CD from the OpenShift Web Console application launcher and then log into Argo CD with `admin` username and the password retrieved from the previous step.
 
-## Configure OpenShift with Argo CD
+## Configure OpenShift with Argo CD - Creating Namespaces and rolebindings
 
 In the current Git repository, the [cluster](cluster/) directory contains OpenShift cluster configurations such as an OpenShift Web Console customization as well as namespaces that should be created. Let's configure Argo CD to recursively sync the content of the [cluster](cluster/) directory to the OpenShift cluster. Initially, we can set the sync policy to manual in order to be able to review changes before rolling out configurations to the cluster. 
 
-In the Argo CD dashboard, click on the **New App** button to add a new Argo CD application that syncs a Git repository containing cluster configurations with the OpenShift cluster.
+Create a new Argo CD application:
 
-Enter the following details and click on **Create**.
-
-* Application Name: `cluster-configs`
-* Project: `default`
-* Sync Policy: `Manual`
-* Repository URL: `https://github.com/ralvares/openshift-gitops-hacking`
-* Revision: `HEAD`
-* Path: `cluster`
-* Destination: `https://kubernetes.default.svc`
-* Namespace: `default`
-* Directory Recurse: `checked`
+>  ```
+>  oc create -f argo/cluster.yaml
+>  `
 
 Looking at the Argo CD dashboard, you would notice that the **cluster-configs** Argo CD application is created by is out of sync, since we configured it with manual sync policy.
-
-Click on the **Sync** button on the **cluster-configs** application and then on **Synchronize** button after reviewing the changes that will be rolled out to the cluster.
 
 Once the sync is completed successfully, you would see that Argo CD reports a the configurations to be currently in sync with the Git repository and healthy. You can click on the **cluster-configs** application to check the details of sync resources and their status on the cluster. 
 
@@ -50,35 +40,15 @@ You can  check that a namespace called `hello-openshift` is created on the clust
 
 Now that the configuration sync is in place, any changes in the Git repository will be automatically detect by Argo CD and would change the status of the **cluster-configs** to `OutOfSync`, which implies a drift from the desired configuration.
 
-## Deploy Applications with Argo CD
+## Deploy GOD-MODE Applications
 
-In addition to configuring OpenShift clusters, many teams use GitOps workflows for continuous delivery and deploying applications in multi-cluster Kubernetes environments.
+The [app](app/) directory in the current Git repository contains the Kubernetes manifests for deploying the sample hello-openshift application. If you are using openshift-local, LOGIN using the user developer ( NON_ADMIN), and you can deploy the superupperhack.yaml without a problem and no restrictions, therefore GOD-MODE activated. 
 
-The [app](app/) directory in the current Git repository contains the Kubernetes manifests using Kustomize for deploying the sample hello-openshift application. Let's configure Argo CD to automatically and recursively deploy any changes made to these manifests on the OpenShift cluster in the `hello-openshift` namespace that was created by Argo CD in the previous step.
 
-In the Argo CD dashboard, click on the **New App** button to add a new Argo CD application that syncs a Git repository containing cluster configurations with the OpenShift cluster.
-
-Create a new Argo CD application by clicking on the **New App** button in the Argo CD dashboard and entering the following details.
-
-* Application Name: `hello-openshift`
-* Project: `default`
-* Sync Policy: `Automatic`
-* Self-heal: `checked`
-* Repository URL: `https://github.com/ralvares/openshift-gitops-hacking`
-* Revision: `HEAD`
-* Path: `app`
-* Destination: `https://kubernetes.default.svc`
-* Namespace: `hello-openshift`
-* Directory Recurse: `checked`
-
-> You can also create the Argo CD application by importing the following file:
 >  ```
->  oc create -f argo/app.yaml
+>  oc apply -f app/superupperhack.yaml
 >  ```
 
-Because we set up the sync policy to `Automatic`, as soon as the Argo CD application is created, a sync is started in order to rollout the manifests to the `hello-openshift` namespace.
-
-In the OpenShift Web Console, go to the **Developer** perspective to review the deployed application.
 
 
 
