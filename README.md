@@ -24,15 +24,15 @@ Click on Argo CD from the OpenShift Web Console application launcher and then lo
 
 ## Configure OpenShift with Argo CD - Creating Namespaces and rolebindings
 
-In the current Git repository, the [cluster](cluster/) directory contains OpenShift cluster configurations such as an OpenShift Web Console customization as well as namespaces that should be created. Let's configure Argo CD to recursively sync the content of the [cluster](cluster/) directory to the OpenShift cluster. Initially, we can set the sync policy to manual in order to be able to review changes before rolling out configurations to the cluster. 
+In the current Git repository, the [cluster](cluster/) directory contains OpenShift cluster configurations such as an OpenShift Web Console customization as well as namespaces that should be created. Let's configure Argo CD to recursively sync the content of the [cluster](cluster/) directory to the OpenShift cluster. 
+
+PS: the user developer will have admin access to the namespace hello-openshift, we will use the user developer to run a pod inside the namespace later on.
 
 Create a new Argo CD application:
 
 >  ```
 >  oc create -f argo/cluster.yaml
 >  ```
-
-Looking at the Argo CD dashboard, you would notice that the **cluster-configs** Argo CD application is created by is out of sync, since we configured it with manual sync policy.
 
 Once the sync is completed successfully, you would see that Argo CD reports a the configurations to be currently in sync with the Git repository and healthy. You can click on the **cluster-configs** application to check the details of sync resources and their status on the cluster. 
 
